@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
+
+  validates :forename, presence: true
+  validates :surname, presence: true
+
 end
