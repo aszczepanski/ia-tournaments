@@ -8,4 +8,7 @@ class User < ActiveRecord::Base
   validates :forename, presence: true
   validates :surname, presence: true
 
+  has_many :tournaments, foreign_key: :organizer_id, dependent: :destroy
+  validates_associated :tournaments
+
 end

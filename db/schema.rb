@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519183506) do
+ActiveRecord::Schema.define(version: 20140521080440) do
+
+  create_table "tournaments", force: true do |t|
+    t.string   "name"
+    t.integer  "organizer_id"
+    t.datetime "date"
+    t.datetime "deadline"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tournaments", ["organizer_id", "date"], name: "index_tournaments_on_organizer_id_and_date"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

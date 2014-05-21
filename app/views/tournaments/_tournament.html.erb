@@ -1,0 +1,6 @@
+<li>
+  <span class="content"><%= tournament.name %></span>
+  <span class="timestamp">
+    Scheduled on <%= tournament.date.strftime("%Y-%m-%d %H:%M") if tournament.date? %>.
+  </span>
+</li>
