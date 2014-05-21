@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :correct_user, only: :destroy
 
   def new
     @tournament = current_user.tournaments.new
@@ -19,9 +20,19 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
   end
 
+  def destroy
+    @tournament.destroy
+    redirect_to root_path
+  end
+
   protected
 
     def tournament_params
       params.require(:tournament).permit(:name, :date, :deadline)
+    end
+
+    def correct_user
+      @tournament = current_user.tournaments.find_by(id: params[:id])
+      redirect_to root_path if @tournament.nil?
     end
 end
