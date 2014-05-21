@@ -1,0 +1,36 @@
+<h1>Edit tournament</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@tournament) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :date %>
+      <%= f.datetime_select :date, { start_year: Date.today.year, minute_step: 15 },
+                                   { style: "width: auto;" } %>
+
+      <%= f.label :deadline %>
+      <%= f.datetime_select :deadline, { start_year: Date.today.year, minute_step: 15 },
+                                       { style: "width: auto;" } %>
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<h2>Cancel tournament</h2>
+
+<div class="row">
+  <div class="span6 offset3">
+    <p>Unhappy?
+      <%= button_to "Cancel tournament", @tournament,
+                    data: { confirm: "Are you sure?" },
+                    method: :delete, class: "btn btn-primary" %>
+    </p>
+  </div>
+</div>
+
+<%= link_to "Back", :back %>

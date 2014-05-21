@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :tournaments, only: [:new, :create, :show, :destroy]
+  resources :tournaments, only: [:new, :create, :edit, :update, :show, :destroy]
   devise_for :users
   root 'static_pages#home'
   match '/help', to: 'static_pages#help', via: 'get'

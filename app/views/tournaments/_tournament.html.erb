@@ -1,11 +1,10 @@
 <li>
-  <span class="content"><%= tournament.name %></span>
+  <span class="content"><%= link_to tournament.name, tournament %></span>
   <span class="timestamp">
-    Scheduled on <%= tournament.date.strftime("%Y-%m-%d %H:%M") if tournament.date? %>.
+    Scheduled on <%= tournament.date.strftime("%Y-%m-%d %H:%M") %>.
   </span>
-  <% if current_user == tournament.organizer %>
-    <%= link_to "delete", tournament, method: :delete,
-                                      data: { confirm: "You sure?" },
-                                      title: tournament.name %>
-  <% end %>
+  <br>
+  <span class="timestamp">
+    Registration till <%= tournament.deadline.strftime("%Y-%m-%d %H:%M") %>.
+  </span>
 </li>

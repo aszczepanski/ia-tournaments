@@ -1,6 +1,6 @@
 class TournamentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
-  before_action :correct_user, only: :destroy
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def new
     @tournament = current_user.tournaments.new
@@ -13,6 +13,18 @@ class TournamentsController < ApplicationController
       redirect_to @tournament
     else
       render 'new'
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @tournament.update_attributes(tournament_params)
+      flash[:success] = "Tournament updated"
+      redirect_to @tournament
+    else
+      render 'edit'
     end
   end
 

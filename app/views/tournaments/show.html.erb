@@ -1,2 +1,12 @@
-<h1>Tournaments#show</h1>
-<p>Find me in app/views/tournaments/show.html.erb</p>
+<h1><%= @tournament.name  %></h1>
+
+<div class="row">
+  <div class="span8">
+    <p>Organizer: <%= @tournament.organizer.full_name %></p>
+    <p>Scheduled on: <%= @tournament.date.strftime("%Y-%m-%d %H:%M") %></p>
+    <p>Registration till: <%= @tournament.deadline.strftime("%Y-%m-%d %H:%M") %></p>
+    <% if current_user == @tournament.organizer %>
+      <p><%= link_to "edit", edit_tournament_path %></p>
+    <% end %>
+  </div>
+</div>

@@ -11,4 +11,8 @@ class User < ActiveRecord::Base
   has_many :tournaments, foreign_key: :organizer_id, dependent: :destroy
   validates_associated :tournaments
 
+  def full_name
+    "#{self.forename} #{self.surname}"
+  end
+
 end
