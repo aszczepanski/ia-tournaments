@@ -9,6 +9,19 @@ class Tournament < ActiveRecord::Base
            :deadline_date_cannot_be_in_past,
            :deadline_has_to_be_before_date
 
+  has_many :participations, dependent: :destroy
+  validates_associated :participations
+
+  has_many :contestants, through: :participations, source: :user
+
+  def is_contestant?(user)
+    participations.find_by(user_id: user.id)
+  end
+
+  def add_contestant!(user)
+    participations.create!(user_id: user.id)
+  end
+
   private
 
     def date_date_cannot_be_in_past

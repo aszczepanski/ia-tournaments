@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update,
+                                            :destroy, :organized, :participated]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def new
@@ -35,6 +36,14 @@ class TournamentsController < ApplicationController
   def destroy
     @tournament.destroy
     redirect_to root_path
+  end
+
+  def organized
+    @tournaments = current_user.tournaments.paginate(page: params[:page], per_page: 10)
+  end
+
+  def participated
+    @tournaments = current_user.participated_tournaments.paginate(page: params[:page], per_page: 10)
   end
 
   protected

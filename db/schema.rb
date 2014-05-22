@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521080440) do
+ActiveRecord::Schema.define(version: 20140522082419) do
+
+  create_table "participations", force: true do |t|
+    t.integer  "tournament_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "participations", ["tournament_id", "user_id"], name: "index_participations_on_tournament_id_and_user_id", unique: true
+  add_index "participations", ["tournament_id"], name: "index_participations_on_tournament_id"
+  add_index "participations", ["user_id"], name: "index_participations_on_user_id"
 
   create_table "tournaments", force: true do |t|
     t.string   "name"

@@ -13,8 +13,10 @@
               </a>
               <ul class="dropdown-menu">
                 <li><%= link_to "Create", new_tournament_path %></li>
-                <li><%= link_to "You organize", "#" %></li>
-                <li><%= link_to "You take part", "#" %></li>
+                <li><%= link_to "You organize (#{current_user.tournaments.count})",
+                        organized_tournaments_path %></li>
+                <li><%= link_to "You take part (#{current_user.participated_tournaments.count})",
+                        participated_tournaments_path %></li>
               </ul>
             </li>
             <li id="fat-menu" class="dropdown">
