@@ -1,6 +1,7 @@
 class TournamentsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update,
-                                            :destroy, :organized, :participated]
+                                            :destroy, :organized, :participated,
+                                            :new_join, :create_join]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def new
@@ -46,10 +47,30 @@ class TournamentsController < ApplicationController
     @tournaments = current_user.participated_tournaments.paginate(page: params[:page], per_page: 10)
   end
 
+  def new_join
+    @tournament = Tournament.find(params[:id])
+    @participation = @tournament.participations.new
+  end
+
+  def create_join
+    @tournament = Tournament.find(participation_params[:tournament_id])
+    @participation = @tournament.participations.build(user_id: current_user.id)
+    if @participation.save
+      flash[:success] = "Joined tournament."
+      redirect_to @tournament
+    else
+      render 'new_join'
+    end
+  end
+
   protected
 
     def tournament_params
       params.require(:tournament).permit(:name, :date, :deadline)
+    end
+
+    def participation_params
+      params.require(:participation).permit(:tournament_id)
     end
 
     def correct_user

@@ -1,0 +1,13 @@
+<h1>Join tournament</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@participation, url: create_join_tournament_path) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.hidden_field :tournament_id %>
+
+      <%= f.submit "Join tournament", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

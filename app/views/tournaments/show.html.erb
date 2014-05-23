@@ -8,5 +8,6 @@
     <% if current_user == @tournament.organizer %>
       <p><%= link_to "edit", edit_tournament_path %></p>
     <% end %>
+    <p><%= link_to "join", new_join_tournament_path %></p>
   </div>
 </div>
