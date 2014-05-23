@@ -12,6 +12,10 @@ class Tournament < ActiveRecord::Base
   validates :max_number_of_contestants, presence: true,
                 numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  validates :seeding_number, presence: true,
+                numericality: { only_integer: true, greater_than_or_equal_to: 0,
+                                less_than_or_equal_to: :max_number_of_contestants }
+
   has_many :participations, dependent: :destroy
 
   has_many :contestants, through: :participations, source: :user

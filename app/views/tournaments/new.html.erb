@@ -19,6 +19,9 @@
       <%= f.label :max_number_of_contestants %>
       <%= f.number_field :max_number_of_contestants, min: 0 %>
 
+      <%= f.label :seeding_number %>
+      <%= f.number_field :seeding_number, min: 0 %>
+
       <%= f.submit "Create new tournament", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>

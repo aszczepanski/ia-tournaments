@@ -69,7 +69,8 @@ class TournamentsController < ApplicationController
   protected
 
     def tournament_params
-      params.require(:tournament).permit(:name, :date, :deadline, :max_number_of_contestants)
+      params.require(:tournament).permit(:name, :date, :deadline,
+                                :max_number_of_contestants, :seeding_number)
     end
 
     def participation_params
