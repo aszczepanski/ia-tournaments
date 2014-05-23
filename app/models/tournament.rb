@@ -27,7 +27,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def joinable?
-    contestants.size < max_number_of_contestants
+    contestants.size < max_number_of_contestants # TODO add deadline limit
   end
 
   private
