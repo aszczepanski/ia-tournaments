@@ -9,10 +9,14 @@ class Tournament < ActiveRecord::Base
            :deadline_date_cannot_be_in_past,
            :deadline_has_to_be_before_date
 
+  validates :max_number_of_contestants, presence: true,
+                numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
   has_many :participations, dependent: :destroy
-  validates_associated :participations
 
   has_many :contestants, through: :participations, source: :user
+
+  validate :contestants_limits
 
   def is_contestant?(user)
     participations.find_by(user_id: user.id)
@@ -20,6 +24,10 @@ class Tournament < ActiveRecord::Base
 
   def add_contestant!(user)
     participations.create!(user_id: user.id)
+  end
+
+  def joinable?
+    contestants.size < max_number_of_contestants
   end
 
   private
@@ -39,6 +47,12 @@ class Tournament < ActiveRecord::Base
     def deadline_has_to_be_before_date
       if date.present? && deadline.present? && date < deadline
         errors.add :base, "Date can't be before deadline"
+      end
+    end
+
+    def contestants_limits
+      if contestants.size > max_number_of_contestants
+        errors.add :max_number_of_contestants, "already exceeded"
       end
     end
 end

@@ -16,6 +16,9 @@
       <%= f.datetime_select :deadline, { start_year: Date.today.year, minute_step: 15 },
                                        { style: "width: auto;" } %>
 
+      <%= f.label :max_number_of_contestants %>
+      <%= f.number_field :max_number_of_contestants, min: 0 %>
+
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>

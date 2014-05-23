@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522082419) do
+ActiveRecord::Schema.define(version: 20140523101745) do
 
   create_table "participations", force: true do |t|
     t.integer  "tournament_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140522082419) do
     t.datetime "deadline"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "max_number_of_contestants", default: 0, null: false
   end
 
   add_index "tournaments", ["organizer_id", "date"], name: "index_tournaments_on_organizer_id_and_date"

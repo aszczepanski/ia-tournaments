@@ -5,6 +5,7 @@
     <p>Organizer: <%= @tournament.organizer.full_name %></p>
     <p>Scheduled on: <%= @tournament.date.strftime("%Y-%m-%d %H:%M") %></p>
     <p>Registration till: <%= @tournament.deadline.strftime("%Y-%m-%d %H:%M") %></p>
+    <p>Max number of contestants: <%= @tournament.max_number_of_contestants %></p>
     <% if current_user == @tournament.organizer %>
       <p><%= link_to "edit", edit_tournament_path %></p>
     <% end %>

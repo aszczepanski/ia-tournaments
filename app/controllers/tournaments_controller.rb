@@ -54,11 +54,14 @@ class TournamentsController < ApplicationController
 
   def create_join
     @tournament = Tournament.find(participation_params[:tournament_id])
+    logger.debug "first"
     @participation = @tournament.participations.build(user_id: current_user.id)
+    logger.debug "second"
     if @participation.save
       flash[:success] = "Joined tournament."
       redirect_to @tournament
     else
+      logger.debug "third"
       render 'new_join'
     end
   end
@@ -66,7 +69,7 @@ class TournamentsController < ApplicationController
   protected
 
     def tournament_params
-      params.require(:tournament).permit(:name, :date, :deadline)
+      params.require(:tournament).permit(:name, :date, :deadline, :max_number_of_contestants)
     end
 
     def participation_params
