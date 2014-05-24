@@ -7,6 +7,12 @@
 
       <%= f.hidden_field :tournament_id %>
 
+      <%= f.label :user_rank_position %>
+      <%= f.number_field :user_rank_position, min: 0 %>
+
+      <%= f.label :user_license_id %>
+      <%= f.number_field :user_license_id, min: 0 %>
+
       <%= f.submit "Join tournament", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>

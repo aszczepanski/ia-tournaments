@@ -1,5 +1,13 @@
 <li>
-  <span class="content"><%= link_to tournament.name, tournament %></span>
+  <span class="content">
+    <%= link_to tournament.name, tournament %>
+    <%= tournament.contestants.count %>/<%= tournament.max_number_of_contestants %>
+    <% if tournament.is_contestant? current_user %>
+      - Already taken
+    <% elsif tournament.joinable? %>
+      - Can be joined
+    <% end %>
+  </span>
   <span class="timestamp">
     Scheduled on <%= tournament.date.strftime("%Y-%m-%d %H:%M") %>.
   </span>
