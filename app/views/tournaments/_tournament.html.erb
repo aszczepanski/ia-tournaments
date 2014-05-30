@@ -2,10 +2,12 @@
   <span class="content">
     <%= link_to tournament.name, tournament %>
     <%= tournament.contestants.count %>/<%= tournament.max_number_of_contestants %>
-    <% if tournament.is_contestant? current_user %>
-      - Already taken
-    <% elsif tournament.joinable? %>
-      - Can be joined
+    <% if user_signed_in? %>
+      <% if tournament.is_contestant? current_user %>
+        - Already taken
+      <% elsif tournament.joinable? %>
+        - Can be joined
+      <% end %>
     <% end %>
   </span>
   <span class="timestamp">

@@ -5,10 +5,20 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  before_filter :try_generate_matches
+
   protected
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << :forename << :surname
       devise_parameter_sanitizer.for(:account_update) << :forename << :surname
+    end
+
+    def try_generate_matches
+      Tournament.all.each do |t|
+        if t.deadline.localtime < Time.zone.now && t.matches.count == 0
+          t.generate_matches
+        end
+      end
     end
 end

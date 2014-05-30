@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524083522) do
+ActiveRecord::Schema.define(version: 20140528101715) do
+
+  create_table "matches", force: true do |t|
+    t.integer  "tournament_id"
+    t.integer  "inner_id"
+    t.integer  "left_user_id"
+    t.integer  "left_user_winner_id"
+    t.integer  "right_user_id"
+    t.integer  "right_user_id_winner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "matches", ["tournament_id", "inner_id"], name: "index_matches_on_tournament_id_and_inner_id", unique: true
+  add_index "matches", ["tournament_id"], name: "index_matches_on_tournament_id"
 
   create_table "participations", force: true do |t|
     t.integer  "tournament_id"

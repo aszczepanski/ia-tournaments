@@ -1,0 +1,21 @@
+<h1>Match</h1>
+
+<p><%= @match.to_string %></p>
+
+<% if !@match.is_ready? %>
+  This match has not been opened yet.
+<% elsif @match.user_added_winner? current_user %>
+  Winner saved!
+<% else %>
+  <div class="row">
+    <div class="span6 offset3">
+      <%= form_tag("/matches/#{@match.id}", method: :patch) do %>
+
+        <%= label_tag 'winner' %>
+        <%= select_tag 'winner', options_for_select(@match.user_names.values) %>
+
+        <%= submit_tag "Save", class: "btn btn-large btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

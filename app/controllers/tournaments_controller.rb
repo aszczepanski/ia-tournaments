@@ -3,6 +3,8 @@ class TournamentsController < ApplicationController
                                             :destroy, :organized, :participated,
                                             :new_join, :create_join]
   before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :validate_new_join, only: :new_join
+  before_action :validate_create_join, only: :create_join
 
   def new
     @tournament = current_user.tournaments.new
@@ -48,12 +50,10 @@ class TournamentsController < ApplicationController
   end
 
   def new_join
-    @tournament = Tournament.find(params[:id])
     @participation = @tournament.participations.new
   end
 
   def create_join
-    @tournament = Tournament.find(participation_params[:tournament_id])
     @participation = current_user.participations.build(participation_params)
     if @participation.save
       flash[:success] = "Joined tournament."
@@ -77,5 +77,22 @@ class TournamentsController < ApplicationController
     def correct_user
       @tournament = current_user.tournaments.find_by(id: params[:id])
       redirect_to root_path if @tournament.nil?
+    end
+
+    def validate_new_join
+      @tournament = Tournament.find(params[:id])
+      can_be_joined
+    end
+
+    def validate_create_join
+      @tournament = Tournament.find(participation_params[:tournament_id])
+      can_be_joined
+    end
+
+    def can_be_joined
+      if !@tournament.joinable? || @tournament.is_contestant?(current_user)
+        flash[:error] = "You can't join this tournament."
+        redirect_to root_path
+      end
     end
 end

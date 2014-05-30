@@ -1,15 +1,106 @@
-<h1><%= @tournament.name  %></h1>
+<h1>
+<%= @tournament.name %>
+</h1>
 
 <div class="row">
-  <div class="span8">
-    <p>Organizer: <%= @tournament.organizer.full_name %></p>
-    <p>Scheduled on: <%= @tournament.date.strftime("%Y-%m-%d %H:%M") %></p>
-    <p>Registration till: <%= @tournament.deadline.strftime("%Y-%m-%d %H:%M") %></p>
-    <p>Max number of contestants: <%= @tournament.max_number_of_contestants %></p>
-    <p>Seeding number: <%= @tournament.seeding_number %></p>
+  <aside class="span4">
+    <address>
+    <strong>Organizer:</strong> <%= @tournament.organizer.full_name %><br>
+    <strong>Scheduled on:</strong> <%= @tournament.date.strftime("%Y-%m-%d %H:%M") %><br>
+    <strong>Registration till:</strong> <%= @tournament.deadline.strftime("%Y-%m-%d %H:%M") %><br>
+    <strong>Max number of contestants:</strong> <%= @tournament.max_number_of_contestants %><br>
+    <strong>Seeding number:</strong> <%= @tournament.seeding_number %><br>
+    <address>
     <% if current_user == @tournament.organizer %>
       <p><%= link_to "edit", edit_tournament_path %></p>
     <% end %>
-    <p><%= link_to "join", new_join_tournament_path %></p>
+
+    <hr>
+
+    <p>Contestants:</p>
+    <% if @tournament.contestants.any? %>
+      <table class="table table-condensed">
+      <tr>
+        <th>rank</th>
+        <th>name</th>
+        <th>license</th>
+      </tr>
+      <% @tournament.participations.order('user_rank_position').each do |p| %>
+      <tr>
+        <td><%= p.user_rank_position %></td>
+        <td><%= p.user.full_name %></td>
+        <td><%= p.user_license_id %></td>
+      </tr>
+      <% end %>
+      </table>
+    <% else %>
+      <i>empty</i>
+    <% end %>
+
+  </aside>
+  <div class="span8">
+    <% if @tournament.has_winner? %>
+      <h4>Winner: <%= @tournament.winner_name %></h4>
+      <hr>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if !@tournament.is_contestant?(current_user) && @tournament.joinable? %>
+        <p align="right">
+          <%= link_to "join tournament", new_join_tournament_path, class: "btn btn-large btn-primary" %>
+        </p>
+      <% end %>
+      <% match = @tournament.user_next_match(current_user) %>
+      <% if match %>
+        <p>Current user next match:</p>
+        <p><%= link_to match.to_string, match %></p>
+        <hr>
+      <% end %>
+    <% end %>
+
+    <% if @tournament.matches.any? %>
+    <p>Matches:</p>
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th>Winner</th> 
+      <tr>
+      <% @tournament.matches.order('inner_id').each do |m| %>
+        <tr>
+          <td><%= m.inner_id %></td>
+          <td>
+            <% type, value = m.left_user_to_string %>
+            <% if type == "name" %>
+              <%= value %>
+            <% elsif type == "match" %>
+              <span class="text-warning">match <%= value %> winner</span>
+            <% else %>
+              <span class="text-warning">-</span>
+            <% end %>
+          </td>
+          <td>
+            <% type, value = m.right_user_to_string %>
+            <% if type == "name" %>
+              <%= value %>
+            <% elsif type == "match" %>
+              <span class="text-warning">match <%= value %> winner</span>
+            <% else %>
+              <span class="text-warning">-</span>
+            <% end %>
+          </td>
+          <td>
+            <% if m.has_winner? %>
+              <span class="text-success"><%= m.winner_name %></span>
+            <% elsif m.is_ready? %>
+              <span class="text-warning">opened</span>
+            <% else %>
+              <span class="text-warning">closed</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <% end %>
   </div>
 </div>
