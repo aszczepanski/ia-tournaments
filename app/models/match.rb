@@ -84,13 +84,19 @@ class Match < ActiveRecord::Base
         update_attributes(left_user_winner_id: left_user_id)
       elsif right_user.full_name == winner_name
         update_attributes(left_user_winner_id: right_user_id)
+      else
+        return false
       end
     elsif right_user.full_name == user.full_name
       if left_user.full_name == winner_name
         update_attributes(right_user_id_winner: left_user_id)
       elsif right_user.full_name == winner_name
         update_attributes(right_user_id_winner: right_user_id)
+      else
+        return false
       end
+    else
+      return false
     end
 
     if left_user_winner_id && right_user_id_winner
@@ -109,8 +115,10 @@ class Match < ActiveRecord::Base
         end
       else
         update_attributes(left_user_winner_id: nil, right_user_id_winner: nil)
+        return false
       end
-    end  
+    end
+    return true
   end
   
   def has_winner?

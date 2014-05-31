@@ -1,29 +1,70 @@
 <h1>Incomming matches</h1>
 
 <div class="row">
-  <div class="span8">
-    <% if @matches.any? %>
-      <h3>Matches (<%= @matches.count %>)</h3>
-      <ul>
-        <% @matches.each do |match| %>
-        <li>
-          <span class="content">
-            <%= link_to match.tournament.name, match.tournament %>
-          </span>
-          <span class="timestamp">
-            <%= link_to match.to_string, match %>
-            <% if match.has_winner? %>
-              [winner - <%= match.winner_name %>]
-            <% elsif match.user_added_winner? current_user %>
-              [waiting for confirmation]
-            <% elsif match.is_ready? && match.participates?(current_user) %>
-              [you can add the winner]
+  <% if @matches.any? %>
+    <table class="table table-hover">
+      <tr>
+        <th>Tournament</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th></th>
+      </tr>
+      <% @matches.each do |m| %>
+        <tr>
+          <td><%= link_to m.tournament.name, m.tournament %></td>
+          <td>
+            <% type, value = m.left_user_to_string %>
+            <% if type == "name" %>
+              <%= value %>
+            <% elsif type == "match" %>
+              <span class="text-warning">match <%= value %> winner</span>
+            <% else %>
+              <span class="text-warning">-</span>
             <% end %>
-          </span>
-        </li>
-        <% end %>
-      </ul>
-      <%= will_paginate @matches %>
-    <% end %>
-  </div>
+          </td>
+          <td>
+            <% type, value = m.right_user_to_string %>
+            <% if type == "name" %>
+              <%= value %>
+            <% elsif type == "match" %>
+              <span class="text-warning">match <%= value %> winner</span>
+            <% else %>
+              <span class="text-warning">-</span>
+            <% end %>
+          </td>
+          <td>
+            <% if m.has_winner? %>
+              <span class="text-success">winner - <%= m.winner_name %></span>
+            <% elsif m.user_added_winner? current_user %>
+              <span class="text-warning">waiting for confirmation</span>
+            <% elsif m.is_ready? && m.participates?(current_user) %>
+              <%= link_to "add winner", m %>
+            <% else %>
+              <span class="text-warning">closed</span>
+            <% end %>
+          </td>
+        <tr>
+      <% end %>
+    </table>
+    <ul>
+      <% @matches.each do |match| %>
+      <li>
+        <span class="content">
+          <%= link_to match.tournament.name, match.tournament %>
+        </span>
+        <span class="timestamp">
+          <%= link_to match.to_string, match %>
+          <% if match.has_winner? %>
+            [winner - <%= match.winner_name %>]
+          <% elsif match.user_added_winner? current_user %>
+            [waiting for confirmation]
+          <% elsif match.is_ready? && match.participates?(current_user) %>
+            [you can add the winner]
+          <% end %>
+        </span>
+      </li>
+      <% end %>
+    </ul>
+    <%= will_paginate @matches %>
+  <% end %>
 </div>

@@ -17,8 +17,11 @@ class MatchesController < ApplicationController
   end
 
   def update
-    @match.add_winner(current_user, params[:winner])
-    flash[:success] = "You have successfully added the winner"
+    if @match.add_winner(current_user, params[:winner]) == true
+      flash[:success] = "You have successfully added the winner"
+    else
+      flash[:error] = "Error - try once again."
+    end
     redirect_to matches_path
   end
 

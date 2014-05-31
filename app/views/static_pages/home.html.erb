@@ -1,13 +1,38 @@
 <h1>Tournaments home page</h1>
 
 <div class="row">
-  <div class="span8">
-    <% if Tournament.any? %>
-      <h3>Tournaments (<%= Tournament.count %>)</h3>
-      <ol class="tournaments">
-        <%= render @tournaments %>
-      </ol>
-      <%= will_paginate @tournaments %>
-    <% end %>
-  </div>
+  <% if Tournament.any? %>
+    <h3>Tournaments (<%= Tournament.count %>)</h3>
+    <table class="table table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Deadline</th>
+        <th>Start date</th>
+        <th>Contestants</th>
+        <th></th>
+      </tr>
+      <% @tournaments.each do |tournament| %>
+        <tr>
+          <td><%= link_to tournament.name, tournament %></td>
+          <td><%= tournament.deadline.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= tournament.date.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= tournament.contestants.count %> / <%= tournament.max_number_of_contestants %></td>
+          <td>
+            <% if user_signed_in? %>
+              <% if tournament.is_contestant? current_user %>
+                Already taken
+              <% elsif tournament.joinable? %>
+                Can be joined
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <ol class="tournaments">
+      <%= render @tournaments %>
+    </ol>
+    <%= will_paginate @tournaments %>
+  <% end %>
 </div>

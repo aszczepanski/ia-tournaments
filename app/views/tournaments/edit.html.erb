@@ -22,7 +22,7 @@
       <%= f.label :seeding_number %>
       <%= f.number_field :seeding_number, min: 0 %>
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary btn-block" %>
     <% end %>
   </div>
 </div>
@@ -34,7 +34,7 @@
     <p>Unhappy?
       <%= button_to "Cancel tournament", @tournament,
                     data: { confirm: "Are you sure?" },
-                    method: :delete, class: "btn btn-primary" %>
+                    method: :delete, class: "btn btn-primary btn-block" %>
     </p>
   </div>
 </div>

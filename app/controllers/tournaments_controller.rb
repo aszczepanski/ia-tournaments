@@ -92,7 +92,7 @@ class TournamentsController < ApplicationController
     def can_be_joined
       if !@tournament.joinable? || @tournament.is_contestant?(current_user)
         flash[:error] = "You can't join this tournament."
-        redirect_to root_path
+        redirect_to @tournament
       end
     end
 end
