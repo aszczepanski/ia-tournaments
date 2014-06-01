@@ -46,25 +46,6 @@
         <tr>
       <% end %>
     </table>
-    <ul>
-      <% @matches.each do |match| %>
-      <li>
-        <span class="content">
-          <%= link_to match.tournament.name, match.tournament %>
-        </span>
-        <span class="timestamp">
-          <%= link_to match.to_string, match %>
-          <% if match.has_winner? %>
-            [winner - <%= match.winner_name %>]
-          <% elsif match.user_added_winner? current_user %>
-            [waiting for confirmation]
-          <% elsif match.is_ready? && match.participates?(current_user) %>
-            [you can add the winner]
-          <% end %>
-        </span>
-      </li>
-      <% end %>
-    </ul>
     <%= will_paginate @matches %>
   <% end %>
 </div>

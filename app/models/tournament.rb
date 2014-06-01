@@ -55,18 +55,17 @@ class Tournament < ActiveRecord::Base
   def generate_matches
     pow = next_power_of_2 contestants.size
     participations.order('user_rank_position').each_with_index do |p, index|
-      if (((index+1) % 2) == 1)
-        match = matches.create!(inner_id: index/2+1, left_user_id: p.id,
+      if index < pow/2
+        match = matches.create!(inner_id: index+1, left_user_id: p.id,
                 left_user_winner_id: p.id, right_user_id_winner: p.id)
       else
-        match = matches.find_by(inner_id: index/2+1)
+        match = matches.find_by(inner_id: index+1-pow/2)
         match.update_attributes(right_user_id: p.id,
                 left_user_winner_id: nil, right_user_id_winner: nil)
       end
     end
 
     for i in pow/2+1..pow-1 do
-      puts i
       match = matches.create!(inner_id: i)
       left_match = matches.find_by(inner_id: (pow-((pow-i)*2+1)))
       if !left_match.right_user_id
