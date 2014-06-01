@@ -68,12 +68,12 @@ class Tournament < ActiveRecord::Base
     for i in pow/2+1..pow-1 do
       match = matches.create!(inner_id: i)
       left_match = matches.find_by(inner_id: (pow-((pow-i)*2+1)))
-      if !left_match.right_user_id
-        match.update_attributes(left_user_id: left_match.left_user_id)
+      if left_match.has_winner?
+        match.update_attributes(left_user_id: left_match.left_user_winner_id)
       end
       right_match = matches.find_by(inner_id: (pow-((pow-i)*2)))
-      if !right_match.right_user_id
-        match.update_attributes(right_user_id: right_match.left_user_id)
+      if right_match.has_winner?
+        match.update_attributes(right_user_id: right_match.left_user_winner_id)
       end
     end
   end
