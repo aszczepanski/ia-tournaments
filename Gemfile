@@ -11,6 +11,8 @@ gem 'bootstrap-will_paginate'
 gem 'devise'
 gem 'figaro'
 
+gem "paperclip", "~> 4.1"
+
 group :development, :test do
   gem 'sqlite3'
   gem 'test-unit'

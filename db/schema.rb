@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140528101715) do
+ActiveRecord::Schema.define(version: 20140602102845) do
 
   create_table "matches", force: true do |t|
     t.integer  "tournament_id"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 20140528101715) do
   add_index "participations", ["tournament_id", "user_rank_position"], name: "index_participations_on_tournament_id_and_user_rank_position", unique: true
   add_index "participations", ["tournament_id"], name: "index_participations_on_tournament_id"
   add_index "participations", ["user_id"], name: "index_participations_on_user_id"
+
+  create_table "sponsors", force: true do |t|
+    t.integer  "tournament_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "name"
+  end
 
   create_table "tournaments", force: true do |t|
     t.string   "name"

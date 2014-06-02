@@ -26,6 +26,8 @@ class Tournament < ActiveRecord::Base
 
   has_many :matches
 
+  has_many :sponsors
+
   def is_contestant?(user)
     participations.find_by(user_id: user.id)
   end

@@ -1,0 +1,21 @@
+<h1>List of logos</h1>
+
+<%= link_to "Add a new sponsor", new_sponsor_tournament_path,
+              class: "btn btn-primary btn-block" %>
+
+<% if @sponsors.any? %>
+  <hr>
+  <p>Sponsors(<%= @sponsors.count %>)</p>
+  <table class="table">
+    <% @sponsors.each do |s| %>
+      <tr>
+        <td><%= image_tag s.logo.url(:medium) %></td>
+        <td><%= s.name %></td>
+        <td><%= link_to 'Delete', destroy_sponsor_path(s), method: :delete,
+                                        data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<%= link_to "Back to tournament", @tournament %>

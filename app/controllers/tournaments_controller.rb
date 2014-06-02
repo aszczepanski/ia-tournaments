@@ -1,8 +1,10 @@
 class TournamentsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update,
                                             :destroy, :organized, :participated,
-                                            :new_join, :create_join]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+                                            :new_join, :create_join,
+                                            :new_sponsor, :create_sponsor, :show_sponsors]
+  before_action :correct_user, only: [:edit, :update, :destroy,
+                                      :new_sponsor, :create_sponsor, :show_sponsors]
   before_action :validate_new_join, only: :new_join
   before_action :validate_create_join, only: :create_join
 
@@ -63,6 +65,25 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def show_sponsors
+    @tournament = Tournament.find(params[:id])
+    @sponsors = @tournament.sponsors
+  end
+
+  def new_sponsor 
+    @sponsor = @tournament.sponsors.new
+  end
+
+  def create_sponsor
+    @sponsor = @tournament.sponsors.build(sponsor_params)
+    if @sponsor.save
+      flash[:success] = "Sponsor added."
+      redirect_to show_sponsors_tournament_path
+    else
+      render 'new_sponsor'
+    end
+  end
+
   protected
 
     def tournament_params
@@ -72,6 +93,10 @@ class TournamentsController < ApplicationController
 
     def participation_params
       params.require(:participation).permit(:tournament_id, :user_license_id, :user_rank_position)
+    end
+
+    def sponsor_params
+      params.require(:sponsor).permit(:name, :logo)
     end
 
     def correct_user

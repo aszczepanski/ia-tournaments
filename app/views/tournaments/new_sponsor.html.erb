@@ -1,0 +1,17 @@
+<h1>Add new sponsor</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@sponsor, url: create_sponsor_tournament_path) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+     
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+ 
+      <%= f.label :logo %>
+      <%= f.file_field :logo %>
+
+      <%= f.submit "Add logo", class: "btn btn-large btn-primary btn-block" %>
+    <% end %>
+  </div>
+</div>

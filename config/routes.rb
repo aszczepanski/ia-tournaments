@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   resources :tournaments, only: [:new, :create, :edit, :update, :show, :destroy]
   get 'tournaments/:id/join' => 'tournaments#new_join', as: :new_join_tournament
   post 'tournaments/join' => 'tournaments#create_join', as: :create_join_tournament
+  get 'tournaments/:id/new_sponsor' => 'tournaments#new_sponsor', as: :new_sponsor_tournament
+  post 'tournaments/:id/create_sponsor' => 'tournaments#create_sponsor', as: :create_sponsor_tournament
+  get 'tournaments/:id/show_sponsors' => 'tournaments#show_sponsors', as: :show_sponsors_tournament
+  delete 'sponsors/:id' => 'sponsors#destroy', as: :destroy_sponsor
 
   match '/users/organized', to: 'tournaments#organized',
                                 via: 'get', as: :organized_tournaments

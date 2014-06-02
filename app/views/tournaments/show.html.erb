@@ -17,6 +17,17 @@
 
     <hr>
 
+    <% @tournament.sponsors.each do |sponsor| %>
+      <%= image_tag sponsor.logo.url(:thumb), title: sponsor.name,
+                    class: "img-thumbnail", style: "padding: 3px" %>
+    <% end %>
+
+    <% if current_user == @tournament.organizer %>
+      <p><%= link_to "manage sponsors", show_sponsors_tournament_path %></p>
+    <% end%>
+
+    <hr>
+
     <p>Contestants:</p>
     <% if @tournament.contestants.any? %>
       <table class="table table-condensed">
