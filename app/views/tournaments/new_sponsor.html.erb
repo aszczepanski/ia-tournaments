@@ -9,9 +9,28 @@
       <%= f.text_field :name %>
  
       <%= f.label :logo %>
-      <%= f.file_field :logo %>
+      <%= f.file_field :logo, class: "btn btn-default btn-block" %>
 
       <%= f.submit "Add logo", class: "btn btn-large btn-primary btn-block" %>
     <% end %>
   </div>
 </div>
+
+<div style="position:relative;">
+        <a class='btn btn-primary' href='javascript:;'>
+            Choose File...
+            <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+        </a>
+        &nbsp;
+        <span class='label label-info' id="upload-file-info"></span>
+</div>
+
+<span>
+    <input  type="file" 
+            style="visibility:hidden; width: 1px;" 
+            id='${multipartFilePath}' name='${multipartFilePath}'  
+            onchange="$(this).parent().find('span').html($(this).val().replace('C:\\fakepath\\', ''))"  /> <!-- Chrome security returns 'C:\fakepath\'  -->
+    <input class="btn btn-primary" type="button" value="Upload File.." onclick="$(this).parent().find('input[type=file]').click();"/> <!-- on button click fire the file click event -->
+    &nbsp;
+    <span  class="badge badge-important" ></span>
+</span>
