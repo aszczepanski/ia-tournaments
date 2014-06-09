@@ -30,7 +30,7 @@ GEM
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
     bcrypt-ruby (3.1.2)
-    bootstrap-sass (3.0.3.0)
+    bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     bootstrap-will_paginate (0.0.10)
       will_paginate
@@ -161,7 +161,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bcrypt-ruby (= 3.1.2)
-  bootstrap-sass (~> 3.0.3.0)
+  bootstrap-sass (= 2.3.2)
   bootstrap-will_paginate
   coffee-rails (~> 4.0.0)
   devise
@@ -177,6 +177,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring
+  sprockets-rails
   sqlite3
   test-unit
   turbolinks
