@@ -1,7 +1,7 @@
 <h1>Create new tournament</h1>
 
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset3 tournaments-form">
     <%= form_for(@tournament) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
@@ -15,6 +15,9 @@
       <%= f.label :deadline %>
       <%= f.datetime_select :deadline, { start_year: Date.today.year, minute_step: 15 },
                                        { style: "width: auto;" } %>
+
+      <%= f.label :address %>
+      <%= f.text_field :address %>
 
       <%= f.label :max_number_of_contestants %>
       <%= f.number_field :max_number_of_contestants, min: 0 %>

@@ -28,6 +28,10 @@ class Tournament < ActiveRecord::Base
 
   has_many :sponsors
 
+  validates :address, presence: true
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
+
   def is_contestant?(user)
     participations.find_by(user_id: user.id)
   end

@@ -36,6 +36,11 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
+    @hash = Gmaps4rails.build_markers(@tournament) do |tournament, marker|
+      marker.lat tournament.latitude
+      marker.lng tournament.longitude
+      marker.infowindow tournament.name
+    end
   end
 
   def destroy
@@ -87,7 +92,7 @@ class TournamentsController < ApplicationController
   protected
 
     def tournament_params
-      params.require(:tournament).permit(:name, :date, :deadline,
+      params.require(:tournament).permit(:name, :date, :deadline, :address,
                                 :max_number_of_contestants, :seeding_number)
     end
 

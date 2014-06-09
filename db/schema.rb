@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602102845) do
+ActiveRecord::Schema.define(version: 20140605103554) do
 
   create_table "matches", force: true do |t|
     t.integer  "tournament_id"
@@ -62,6 +62,9 @@ ActiveRecord::Schema.define(version: 20140602102845) do
     t.datetime "updated_at"
     t.integer  "max_number_of_contestants", default: 0, null: false
     t.integer  "seeding_number",            default: 0, null: false
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "tournaments", ["organizer_id", "date"], name: "index_tournaments_on_organizer_id_and_date"

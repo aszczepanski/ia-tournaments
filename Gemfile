@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.1'
-gem 'bootstrap-sass'
-gem 'sprockets', '2.11.0'
+#gem 'sprockets', '2.11.0'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'faker'
 gem 'will_paginate'
@@ -13,6 +12,10 @@ gem 'figaro'
 
 gem "paperclip", "~> 4.1"
 
+gem 'geocoder'
+gem 'underscore-rails'
+gem 'gmaps4rails'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'test-unit'
@@ -20,6 +23,7 @@ group :development, :test do
 end
 
 gem 'sass-rails', '~> 4.0.3'
+gem 'bootstrap-sass', "~> 3.0.3.0"
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'

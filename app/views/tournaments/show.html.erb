@@ -1,19 +1,36 @@
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+<script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
 <h1>
 <%= @tournament.name %>
 </h1>
 
 <div class="row">
-  <aside class="span4">
+  <aside class="span5" style="min-width: 300px">
     <address>
     <strong>Organizer:</strong> <%= @tournament.organizer.full_name %><br>
     <strong>Scheduled on:</strong> <%= @tournament.date.strftime("%Y-%m-%d %H:%M") %><br>
     <strong>Registration till:</strong> <%= @tournament.deadline.strftime("%Y-%m-%d %H:%M") %><br>
     <strong>Max number of contestants:</strong> <%= @tournament.max_number_of_contestants %><br>
     <strong>Seeding number:</strong> <%= @tournament.seeding_number %><br>
+    <strong>Address:</strong> <%= @tournament.address %><br>
     <address>
     <% if current_user == @tournament.organizer %>
       <p><%= link_to "edit", edit_tournament_path %></p>
     <% end %>
+
+<hr>
+<div style='width: 100%;'>
+  <div id="map" style='width: 100%; height: 300px;'></div>
+</div>
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  handler.getMap().setZoom(12);
+});
+</script>
 
     <hr>
 
@@ -49,7 +66,7 @@
     <% end %>
 
   </aside>
-  <div class="span8">
+  <div class="span7">
     <% if @tournament.has_winner? %>
       <h4>Winner: <%= @tournament.winner_name %></h4>
       <hr>
