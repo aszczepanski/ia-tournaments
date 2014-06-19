@@ -7,6 +7,7 @@ class TournamentsController < ApplicationController
                                       :new_sponsor, :create_sponsor, :show_sponsors]
   before_action :validate_new_join, only: :new_join
   before_action :validate_create_join, only: :create_join
+  before_action :validate_modify_in_past, only: [:edit, :update]
 
   def new
     @tournament = current_user.tournaments.new
@@ -117,6 +118,13 @@ class TournamentsController < ApplicationController
     def validate_create_join
       @tournament = Tournament.find(participation_params[:tournament_id])
       can_be_joined
+    end
+
+    def validate_modify_in_past
+      if @tournament.deadline.localtime < Time.zone.now
+        flash[:error] = "You can't modify tournament after deadline."
+        redirect_to @tournament
+      end
     end
 
     def can_be_joined
