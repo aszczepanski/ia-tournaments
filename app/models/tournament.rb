@@ -3,6 +3,7 @@ require 'ostruct'
 class Tournament < ActiveRecord::Base
   belongs_to :organizer, class_name: "User"
   default_scope -> { order('date') }
+  scope :name_like, ->(search) { where("name LIKE ?", "%#{search}%") }
   validates :organizer_id, presence: true
   validates :name, presence: true, length: { minimum: 4 }
   validates :date, presence: true
