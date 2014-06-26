@@ -13,7 +13,7 @@
     <strong>Max number of contestants:</strong> <%= @tournament.max_number_of_contestants %><br>
     <strong>Seeding number:</strong> <%= @tournament.seeding_number %><br>
     <strong>Address:</strong> <%= @tournament.address %><br>
-    <address>
+    </address>
     <% if current_user == @tournament.organizer %>
       <p><%= link_to "edit", edit_tournament_path %></p>
     <% end %>
