@@ -1,4 +1,4 @@
 Tournaments app
 ===
 
-Internet Application course final project
+Internet Applications course final project
