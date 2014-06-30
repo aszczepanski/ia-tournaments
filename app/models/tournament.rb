@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class Tournament < ActiveRecord::Base
   belongs_to :organizer, class_name: "User"
   default_scope -> { order('date') }
